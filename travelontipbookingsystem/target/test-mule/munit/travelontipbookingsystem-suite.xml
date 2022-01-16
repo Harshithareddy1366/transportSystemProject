@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="travelontipbookingsystem-suite.xml" />
+	<munit:test name="Copy_of_travelOnTripExternalDb-test" doc:id="215a7e2a-77be-4361-a726-17e1b8dbd70a" >
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy Copy_of_Transform Message" doc:id="846329aa-75b6-4b8d-a650-34743072845f" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="88b53d21-c056-4882-acf3-42d250f7ab3c" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="8c56cdcb-3ac9-41b8-81f7-72fc165cfbc1" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="15e69ba2-e561-4656-9129-35b449040a18" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="745f4209-d4cf-44e0-92b4-3caead5225ef" >
+				<munit:payload value="#[readUrl('classpath://CopyoftravelOnTripExternalDbtest\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://CopyoftravelOnTripExternalDbtest\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to Copy_of_travelOnTripExternalDb" doc:id="0c5b984b-5d5d-4bfb-9317-92078519e3a8" name="Copy_of_travelOnTripExternalDb"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="6b3a8b6b-7e23-432c-a675-160b597e9874" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Copy_of_Transform Message" doc:id="1ea42600-96d7-4ed7-b3b1-57027baaf800" processor="ee:transform" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="88b53d21-c056-4882-acf3-42d250f7ab3c" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="Copy_of_travelOnTripExternalDb-test1" doc:id="26a0d741-dea8-415c-8016-7095a95f89da" >
+		<munit:behavior >
+			<munit-tools:spy doc:name="Spy Copy_of_Logger" doc:id="acb7db05-de65-478e-b812-af91be88629a" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a3ddc618-5887-4e01-8871-a65498b04dcf" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="fd5d807b-c4c4-4079-87f3-928eb1dfbbef" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest1::spy_assert_payload
+---
+spy_assert_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="21fc3617-9bb2-478c-ae29-c2fd7341615e" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest1::spy_assert_payload1
+---
+spy_assert_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit-tools:spy doc:name="Spy Copy_of_Logger" doc:id="3d4e2e9e-eea3-462b-b71a-ea259aa7660a" processor="logger">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="3e8b178d-4008-401e-8a2b-f91992b0ba5e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:before-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="0809fc3a-b914-459e-bb89-3437b502a4bf" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest1::spy_assert_payload2
+---
+spy_assert_payload2::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:before-call>
+				<munit-tools:after-call >
+					<munit-tools:assert doc:name="Assert payload" doc:id="9cee291f-34e6-4f50-9933-bae09b43ca5c" message="The payload does not match">
+						<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest1::spy_assert_payload3
+---
+spy_assert_payload3::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+					</munit-tools:assert>
+				</munit-tools:after-call>
+			</munit-tools:spy>
+			<munit:set-event doc:name="Set Input" doc:id="e1da9526-4c12-4b9a-8229-a294170fe8bc" >
+				<munit:payload value="#[readUrl('classpath://CopyoftravelOnTripExternalDbtest1\set-event_payload.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://CopyoftravelOnTripExternalDbtest1\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to Copy_of_travelOnTripExternalDb" doc:id="76920e46-4fd4-40c0-a281-f72084697b57" name="Copy_of_travelOnTripExternalDb"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="9e4efdc0-3fb1-47b7-be24-3ade8662fd9f" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import CopyoftravelOnTripExternalDbtest1::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+			<munit-tools:verify-call doc:name="Verify Copy_of_Logger" doc:id="9354a221-82f5-4553-862e-fbda69423fe0" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="a3ddc618-5887-4e01-8871-a65498b04dcf" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+			<munit-tools:verify-call doc:name="Verify Copy_of_Logger" doc:id="782647ea-e4e4-4257-b998-9a10dea4d99a" processor="logger" times="1">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="3e8b178d-4008-401e-8a2b-f91992b0ba5e" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+			</munit-tools:verify-call>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_03148393_610b_4d90_852a_aa870f9c65b3_Output_Payload = Array<{  companyCode: String,   destinationLocation: {    locationDesc: String,     locationCode: String,     _?: Any  },   originLocation: {    locationDesc: String,     locationCode: String,     _?: Any  },   _?: Any}>
+

@@ -1,0 +1,55 @@
+#%RAML 1.0
+title: System-api-FastGo
+/{transportType}:
+  /{transportCompany}:
+   /Routes:
+     get:
+       headers:
+         transactionId:
+           required: true
+           type: string
+       queryParameters:
+         companyName:
+           type: string 
+           required: false
+         departureLocation:
+           type: string
+           required: false
+         destinationLocation:
+          required: false
+       responses:
+        200:
+          body:
+            application/json:
+              example: {
+
+              }
+                
+   /schedules:             
+     get:
+       headers:
+         transactionId:
+          required: true
+          type: string
+       queryParameters:
+         companyName:
+           type: string 
+           required: false
+         departureLocation:
+           type: string
+           required: false
+         destinationLocation:
+          required: false
+         requestTimezone:
+           required: false
+           type: string
+       responses:
+        200:
+          body:
+            application/json:
+              example:
+                {
+
+                }
+      
+               

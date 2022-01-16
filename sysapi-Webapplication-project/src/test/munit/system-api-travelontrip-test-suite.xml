@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit"
+	xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<munit:config name="system-api-travelontrip-test-suite.xml" />
+	<munit:test name="system-api-travelontrip-test-suite-get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-configTest" doc:id="9d1b4065-a966-4ab3-8f44-317171b480f5" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="bb1f2b4a-2504-4ddb-8a00-51c6067c1cb9" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Request" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="b19e7a27-c2c4-467d-ad10-7b63b3922c95" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('docs.json')]" mediaType="application/json" />
+					<munit-tools:attributes value="#[{queryparams : { 'transactionId' : '1'}}]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="de9d6516-f05a-4626-a9c9-ca065e6db8ec" >
+				<munit:attributes value="#[{queryparams : { 'transactionId' : '1'}}]" />
+				<munit:variables >
+					<munit:variable key="transactionId" value="1" />
+					<munit:variable key="transportType" value="Routes" />
+					<munit:variable key="transportCompany" value="travelOnTip" />
+				</munit:variables>
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config" doc:id="7007ffdf-b6d9-43bf-92d1-30c411f723f8" name="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="a6a93100-7719-4503-bf05-6492abe498fd" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="system-api-travelontrip-test-suite-get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-configTest" doc:id="3cf31f49-41b0-4e5d-8bb5-adec856e2365" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="abc409a6-9e41-46f3-ab08-fa71da14ef11" processor="http:request">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Request" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="b19e7a27-c2c4-467d-ad10-7b63b3922c95" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('docs1.json')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<munit:set-event doc:name="Set Event" doc:id="78e55682-e2a7-47a3-b6e6-5573af7cb1c3" >
+				<munit:attributes value="#[{queryparams : { 'transactionId' : '1'}}]" />
+			</munit:set-event>
+			<flow-ref doc:name="Flow-ref to get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config" doc:id="eeaeb5c3-2ee3-4e67-b984-ee1352c519e7" name="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="4a91dd89-c6d2-45a2-8b0a-fc89c7900542" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="system-api-travelontrip-test-suite-get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-configTest1" doc:id="ff6b10d8-d8b7-462c-8bf1-19f5663bd927" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="b9f09a05-6a36-41a0-b96c-8f59fcc46013" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Transform Message" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="088a8e94-9d7f-4b80-876b-8a12a6182134" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('docs1.json')]" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config" doc:id="34377d6a-e16b-4259-9687-4e0e28fc1794" name="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="e34c99a4-aa32-4574-b33d-886935bbde3e" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="system-api-travelontrip-test-suite-get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-configTest1" doc:id="ff5ce55f-174d-4144-bca6-749600dc7df3" description="Test">
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="30dcbe7d-0e27-4f24-b988-a2a92fe9fe93" processor="ee:transform">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="Transform Message" attributeName="doc:name" />
+					<munit-tools:with-attribute whereValue="088a8e94-9d7f-4b80-876b-8a12a6182134" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[MunitTools::getResourceAsString('docs.json')]" mediaType="application/json" />
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config" doc:id="e09f4c01-f3c1-44a5-8ee0-b12c16f44f2b" name="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-that doc:name="Assert that" doc:id="53557684-1255-4e99-9cd6-037f253e90f5" is="#[MunitTools::notNullValue()]" expression="#[payload]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="system-api-travelontrip-test-suite-system-api-travelontrip-mainTest" doc:id="56ef1ff9-a7a0-4209-a23b-bae6138c5f83" description="Test" expectedErrorType="APIKIT:BAD_REQUEST">
+		<munit:enable-flow-sources >
+			<munit:enable-flow-source value="system-api-travelontrip-main" />
+		</munit:enable-flow-sources>
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="5851f3e2-4bad-41e7-aee4-adc208e57558" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="system-api-travelontrip-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:error typeId="APIKIT:BAD_REQUEST" />
+				</munit-tools:then-return>
+				<munit-tools:then-call flow="system-api-travelontrip-console" />
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to system-api-travelontrip-main" doc:id="e0ea3d79-d88b-42b3-982c-94e4c0d01af9" name="system-api-travelontrip-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="a703d321-590a-48d8-a5db-9153e35c7d50" actual="#[vars.httpStatus]" expected="#[400]"/>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="Test" doc:id="937266ee-d470-43a5-b4d2-516cc0c03255" description="Test" expectedErrorType="APIKIT:NOT_FOUND">
+		<munit:enable-flow-sources >
+			<munit:enable-flow-source value="system-api-travelontrip-main" />
+		</munit:enable-flow-sources>
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock when" doc:id="27978ce6-c660-478b-b67e-02d4d8652293" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="system-api-travelontrip-config" attributeName="config-ref" />
+				</munit-tools:with-attributes>
+			</munit-tools:mock-when>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to system-api-travelontrip-main" doc:id="4b315b0e-452c-45d5-a524-f48e4d908dd5" name="system-api-travelontrip-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert-equals doc:name="Assert equals" doc:id="13c76959-e475-4520-90d9-35a1d07a4e71" actual="#[vars.httpStatus]" expected="#[404]"/>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

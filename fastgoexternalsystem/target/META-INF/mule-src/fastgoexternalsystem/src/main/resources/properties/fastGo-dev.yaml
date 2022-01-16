@@ -1,0 +1,11 @@
+httplistener:
+ host: "localhost"
+ port: "8084"
+ path: "/fastgo/{transportType}"
+
+database:
+ host: "localhost"
+ port: "3306"
+ user: "root"
+ password: "root"
+ schema: "TransportSystem"

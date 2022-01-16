@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="getRoute-exp-web-app-implementationSub_Flow" doc:id="47afdfd7-8fb0-46f8-a8f6-173e6bbfb03d" >
+		<http:request method="GET" doc:name="Request" doc:id="140e4aec-035f-45f2-a587-724bfca54129" url="http://localhost:8085/api/booking/bus/Routes?companyName=travelOnTip">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	transactionId : vars.transactionId
+}]]]></http:headers>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	departureLocation : vars.departureLocation
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="cfdcd498-ec31-4546-8e3f-0cbccb0d62b7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload map(value,index)->
+{             
+    "companyCode": vars.companyName,
+    "originLocation": {
+    	"locationCode":vars.departureLocation,
+      "locationDesc": "beavuna singapore"
+    },
+    "destinationLocation": {
+      "locationDesc": "Klang Malaysia"
+    }
+	
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="fastgo-bookingsystemFlow" doc:id="13a7d163-0111-4530-98d1-9ceb5fade0d2" >
+		<http:listener doc:name="Listener" doc:id="6f711973-d6af-442b-a78d-674978a19b75" path="${httplistener.path}" config-ref="HTTP_Listener_config"/>
+		<ee:transform doc:name="Transform Message" doc:id="241fc833-9403-4f0b-9f69-a312fa9ecf26" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="transactionId" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.headers.transactionId]]></ee:set-variable>
+				<ee:set-variable variableName="transportType" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.uriParams.transportType]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="70454a19-3105-45a7-8623-b1f9d918876d" message="request recieved fastgo---#[vars.transactionId]" />
+		<choice doc:name="Choice" doc:id="4eaa3626-5148-4ce0-bd61-f7e32110558c" >
+			<when expression='#[vars.transportType=="routes"]' >
+				<logger level="INFO" doc:name="Logger" doc:id="405f8975-a64a-4393-9b98-61864ae5a65e" message="routes----#[vars.transactionId]" />
+				<flow-ref doc:name="Flow Reference" doc:id="376f408f-fedd-42a6-9358-46575a798708" name="FastGoGetRoutesImplementaionFlowFlow" />
+			</when>
+			<when expression='#[vars.transportType=="schedules"]' >
+				<logger level="INFO" doc:name="Logger" doc:id="206731fe-f86f-4bd3-8bb9-e570af971576" message="schedules----#[vars.transactionId]" />
+				<flow-ref doc:name="Flow Reference" doc:id="36f0c176-174f-45a1-b603-985b145debef" name="FastGoGetschedulesImplementaionFlowFlow" />
+			</when>
+			<otherwise >
+				<logger level="DEBUG" doc:name="Logger" doc:id="e46bf32e-d1b9-4146-b288-ae58200ae4d9" message="given uriParam in incorrect" />
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Logger" doc:id="21aa808d-de74-45ce-9b22-9547c4ae9af9" message="response sent -----#[vars.transactionId]" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="7e9409f3-fec6-4b97-b083-ab310dcabbb4" >
+				<logger level="INFO" doc:name="Logger" doc:id="850ce501-0f42-47f6-aa93-b54a955e7fd5" message="error caused" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

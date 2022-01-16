@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd http://www.mulesoft.org/schema/mule/munit-tools http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd ">
+    <munit:config name="system-api-travelontrip-apikit-test.xml" />
+    <http:request-config name="HTTP_Request_Configuration" basePath="/api">
+        <http:request-connection host="localhost" port="8081" />
+    </http:request-config>
+    <munit:test name="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config-200-application\json-FlowTest" description="Verifying functionality of [get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config-200-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="system-api-travelontrip-main" />
+            <munit:enable-flow-source value="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config" />
+        </munit:enable-flow-sources>
+        <munit:behavior>
+            <set-variable variableName="transportType" value="#['null']" doc:name="transportType" />
+            <set-variable variableName="transportCompany" value="#['null']" doc:name="transportCompany" />
+        </munit:behavior>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="GET" path="#['/$(vars.transportType)/$(vars.transportCompany)/schedules']">
+                <http:headers>#[{"Accept":"application/json","transactionId":""}]</http:headers>
+                <http:query-params>#[{}]</http:query-params>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(200)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 200" />
+            <munit-tools:assert-that expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsString('scaffolder/response/get_200_{transporttype}_{transportcompany}_schedules_application_json.json'))]" message="The response payload is not correct!" doc:name="Assert That - Payload is Expected" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config-400-application\json-FlowTest" description="Verifying functionality of [get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config-400-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="system-api-travelontrip-main" />
+            <munit:enable-flow-source value="get:\(transportType)\(transportCompany)\schedules:system-api-travelontrip-config" />
+        </munit:enable-flow-sources>
+        <munit:behavior>
+            <set-variable variableName="transportType" value="#['null']" doc:name="transportType" />
+            <set-variable variableName="transportCompany" value="#['null']" doc:name="transportCompany" />
+        </munit:behavior>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="GET" path="#['/$(vars.transportType)/$(vars.transportCompany)/schedules']">
+                <http:headers>#[{"Accept":"application/json","transactionId":""}]</http:headers>
+                <http:query-params>#[{}]</http:query-params>
+                <http:response-validator>
+                    <http:success-status-code-validator values="400" />
+                </http:response-validator>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(400)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 400" />
+            <munit-tools:assert-that expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsString('scaffolder/response/get_400_{transporttype}_{transportcompany}_schedules_application_json.json'))]" message="The response payload is not correct!" doc:name="Assert That - Payload is Expected" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config-200-application\json-FlowTest" description="Verifying functionality of [get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config-200-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="system-api-travelontrip-main" />
+            <munit:enable-flow-source value="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config" />
+        </munit:enable-flow-sources>
+        <munit:behavior>
+            <set-variable variableName="transportType" value="#['null']" doc:name="transportType" />
+            <set-variable variableName="transportCompany" value="#['null']" doc:name="transportCompany" />
+        </munit:behavior>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="GET" path="#['/$(vars.transportType)/$(vars.transportCompany)/Routes']">
+                <http:headers>#[{"Accept":"application/json","transactionId":"hssfdyusdj"}]</http:headers>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(200)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 200" />
+            <munit-tools:assert-that expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsString('scaffolder/response/get_200_{transporttype}_{transportcompany}_routes_application_json.json'))]" message="The response payload is not correct!" doc:name="Assert That - Payload is Expected" />
+        </munit:validation>
+    </munit:test>
+    <munit:test name="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config-400-application\json-FlowTest" description="Verifying functionality of [get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config-400-application\json]">
+        <munit:enable-flow-sources>
+            <munit:enable-flow-source value="system-api-travelontrip-main" />
+            <munit:enable-flow-source value="get:\(transportType)\(transportCompany)\Routes:system-api-travelontrip-config" />
+        </munit:enable-flow-sources>
+        <munit:behavior>
+            <set-variable variableName="transportType" value="#['null']" doc:name="transportType" />
+            <set-variable variableName="transportCompany" value="#['null']" doc:name="transportCompany" />
+        </munit:behavior>
+        <munit:execution>
+            <http:request config-ref="HTTP_Request_Configuration" method="GET" path="#['/$(vars.transportType)/$(vars.transportCompany)/Routes']">
+                <http:headers>#[{"Accept":"application/json","transactionId":"hssfdyusdj"}]</http:headers>
+                <http:response-validator>
+                    <http:success-status-code-validator values="400" />
+                </http:response-validator>
+            </http:request>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that expression="#[attributes.statusCode]" is="#[MunitTools::equalTo(400)]" message="The HTTP Status code is not correct!" doc:name="Assert That Status Code is 400" />
+            <munit-tools:assert-that expression="#[output application/java ---write(payload, 'application/json') as String]" is="#[MunitTools::equalTo(MunitTools::getResourceAsString('scaffolder/response/get_400_{transporttype}_{transportcompany}_routes_application_json.json'))]" message="The response payload is not correct!" doc:name="Assert That - Payload is Expected" />
+        </munit:validation>
+    </munit:test>
+</mule>

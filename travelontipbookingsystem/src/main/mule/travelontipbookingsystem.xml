@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="Copy_of_travelOnTripExternalDb" doc:id="c5fac33c-23d6-4369-a5bc-62489f749267" >
+		<http:listener doc:name="Copy_of_Listener" doc:id="c35c1a4e-9650-4651-a6fa-ff8f4e98f038" config-ref="HTTP_Listener_config" path="${httplistener.path}" />
+		<ee:transform doc:name="Copy_of_Transform Message" doc:id="88b53d21-c056-4882-acf3-42d250f7ab3c" >
+			<ee:message />
+			<ee:variables >
+				<ee:set-variable variableName="transportType" ><![CDATA[%dw 2.0
+output application/json
+---
+attributes.uriParams.transportType]]></ee:set-variable>
+				<ee:set-variable variableName="transactionId" ><![CDATA[%dw 2.0
+output application/java
+---
+attributes.headers.transactionId]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="f844986b-cc6e-4bc7-9153-ecf800431c38" message="Request Recieved for external system for transactionId---#[vars.transactionId]" />
+		<choice doc:name="Copy_of_" doc:id="cc9ad84b-7172-4b85-9e70-85231ee5433d" >
+			<when expression='#[vars.transportType=="routes"]' >
+				<logger level="INFO" doc:name="Copy_of_Logger" doc:id="3d20c7a1-80e7-40f1-ba53-d30a1e94a630" message="routes-----#[vars.transactionId]" />
+				<flow-ref doc:name="Copy_of_Flow Reference" doc:id="e591b2c8-5017-4093-85b4-167960fba4de" name="Copy_of_getRoutesimplementationFlow" />
+			</when>
+			<when expression='#[vars.transportType=="schedules"]' >
+				<logger level="INFO" doc:name="Copy_of_Logger" doc:id="3e8b178d-4008-401e-8a2b-f91992b0ba5e" message="schedules----#[vars.transactionId]" />
+				<flow-ref doc:name="Copy_of_Flow Reference" doc:id="039dffe6-3a25-422e-86f7-089cf7480fc3" name="Copy_of_getSchedulesImplementaionflowFlow" />
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Copy_of_Logger" doc:id="56c00032-66a5-4954-81ac-d4a8338f1f05" message="uriParam is incorrect -----#[vars.transactionId]" />
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="Copy_of_Logger" doc:id="a3ddc618-5887-4e01-8871-a65498b04dcf" message="Response sent for external system for transactionId---#[vars.transactionId]" />
+		<error-handler >
+			<on-error-propagate enableNotifications="true" logException="true" doc:name="Copy_of_On Error Propagate" doc:id="7ae0f8a5-8f27-42c9-9298-8d37f86b7a3a" >
+				<logger level="INFO" doc:name="Copy_of_Logger" doc:id="9c4dc3cb-13bf-47b5-80b6-d5282d7f40e8" message="Error occured" />
+			</on-error-propagate>
+		</error-handler>
+	</flow>
+</mule>

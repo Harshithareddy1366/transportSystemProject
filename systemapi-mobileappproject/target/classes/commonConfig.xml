@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4f32fb3d-d662-499e-8e97-4fe6c47c247a" >
+		<http:listener-connection host="${httplistener.host}" port="${httplistener.port}" />
+	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="1a025c5d-6762-4a21-b668-7a909df13ebe" />
+	<configuration-properties doc:name="Configuration properties" doc:id="4c6417c2-5302-4b84-81e0-c76d5afd1d3a" file="properties\systemApiMobileApp-dev.yaml" />
+</mule>

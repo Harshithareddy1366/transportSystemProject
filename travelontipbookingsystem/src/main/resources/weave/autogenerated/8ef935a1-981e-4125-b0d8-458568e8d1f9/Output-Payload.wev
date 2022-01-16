@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_8ef935a1_981e_4125_b0d8_458568e8d1f9_Output_Payload = Array<{|  availableSeats: Number,   departureDateTime: Date,   travelRoute: {| destinationLocation: {| locationCode: String |} |},   originLocation: {| locationCode: String |}|}>
+

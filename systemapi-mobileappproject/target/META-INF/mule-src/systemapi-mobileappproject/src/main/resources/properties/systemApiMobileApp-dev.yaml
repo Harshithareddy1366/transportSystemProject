@@ -1,0 +1,8 @@
+httplistener:
+ host: "localhost"
+ port: "8088"
+Request:
+ routes:
+  url: "http://localhost:8084/fastgo/routes" 
+ schedules:
+  url: "http://localhost:8084/fastgo/schedules"   
